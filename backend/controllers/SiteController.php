@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\LoginForm;
+use common\tests\_generated\UnitTesterActions;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;

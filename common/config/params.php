@@ -6,6 +6,8 @@ return [
     'senderName' => 'Example.com mailer',
     'user.passwordResetTokenExpire' => 3600,
     'user.passwordMinLength' => 8,
-    'frontendHostInfo' => 'http://example.com',
-    'backendHostInfo' => 'http://backend.example.com',
+    'cookieValidationKey' => 'bUMx6LhN4v7zsYjgUcMEUrKarDXJIwfx2we2daxea32e2',
+    'cookieDomain' => '.shop.test',
+    'frontendHostInfo' => 'http://shop.test',
+    'backendHostInfo' => 'http://admin.shop.test/',
 ];
