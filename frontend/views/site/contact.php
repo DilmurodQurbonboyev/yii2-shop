@@ -2,10 +2,10 @@
 
 /** @var yii\web\View $this */
 /** @var yii\bootstrap4\ActiveForm $form */
-/** @var \frontend\models\ContactForm $model */
+/** @var \frontend\forms\ContactForm $model */
 
-use yii\bootstrap4\Html;
 use yii\bootstrap4\ActiveForm;
+use yii\bootstrap4\Html;
 use yii\captcha\Captcha;
 
 $this->title = 'Contact';
