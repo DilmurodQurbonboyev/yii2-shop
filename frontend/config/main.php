@@ -17,13 +17,15 @@ return [
             'cookieValidationKey' => $params['cookieValidationKey'],
         ],
         'user' => [
-            'identityClass' => 'entities\User',
+            'identityClass' => 'shop\entities\User\User',
             'enableAutoLogin' => true,
             'identityCookie' => [
                 'name' => '_identity',
                 'httpOnly' => true,
                 'domain' => $params['cookieDomain']
             ],
+            'loginUrl' => ['auth/auth/login'],
+
         ],
         'session' => [
             // this is the name of the session cookie used for login on the frontend
@@ -46,9 +48,9 @@ return [
             'errorAction' => 'site/error',
         ],
 
-        'frontendUrlManager' => require __DIR__.'/urlManager.php',
-        'backendUrlManager' => require __DIR__.'/../../backend/config/urlManager.php',
-        'urlManager' => function(){
+        'frontendUrlManager' => require __DIR__ . '/urlManager.php',
+        'backendUrlManager' => require __DIR__ . '/../../backend/config/urlManager.php',
+        'urlManager' => function () {
             return Yii::$app->get('frontendUrlManager');
         },
 

@@ -1,7 +1,7 @@
 <?php
-
 namespace shop\entities\User;
 
+use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -16,17 +16,19 @@ use yii\web\IdentityInterface;
  * @property string $username
  * @property string $password_hash
  * @property string $password_reset_token
- * @property string $verification_token
  * @property string $email
+ * @property string $email_confirm_token
+ * @property string $phone
  * @property string $auth_key
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
+ *
+ * @property Network[] $networks
  */
 class User extends ActiveRecord implements IdentityInterface
 {
-//    use InstantiateTrait;
 
     const STATUS_WAIT = 0;
     const STATUS_INACTIVE = 9;

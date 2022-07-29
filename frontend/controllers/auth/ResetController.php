@@ -23,24 +23,21 @@ class ResetController extends Controller
     public function actionRequest()
     {
         $form = new PasswordResetRequestForm();
-
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
                 $this->service->request($form);
                 Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
                 return $this->goHome();
-            } catch (DomainException $e) {
+            } catch (\DomainException $e) {
                 Yii::$app->errorHandler->logException($e);
-                Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for the provided email address.');
+                Yii::$app->session->setFlash('error', $e->getMessage());
             }
-
         }
 
-        return $this->render('requestPasswordResetToken', [
+        return $this->render('request', [
             'model' => $form,
         ]);
     }
-
     /**
      * @throws BadRequestHttpException
      */
@@ -48,24 +45,23 @@ class ResetController extends Controller
     {
         try {
             $this->service->validateToken($token);
-        } catch (DomainException $e) {
+        } catch (\DomainException $e) {
             throw new BadRequestHttpException($e->getMessage());
         }
 
         $form = new ResetPasswordForm();
-
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
                 $this->service->reset($token, $form);
                 Yii::$app->session->setFlash('success', 'New password saved.');
-                return $this->goHome();
-            } catch (DomainException $e) {
+            } catch (\DomainException $e) {
                 Yii::$app->errorHandler->logException($e);
                 Yii::$app->session->setFlash('error', $e->getMessage());
             }
+            return $this->goHome();
         }
 
-        return $this->render('resetPassword', [
+        return $this->render('confirm', [
             'model' => $form,
         ]);
     }

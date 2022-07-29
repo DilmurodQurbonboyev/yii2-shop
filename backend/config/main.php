@@ -21,13 +21,14 @@ return [
             'cookieValidationKey' => $params['cookieValidationKey'],
         ],
         'user' => [
-            'identityClass' => 'entities\User',
+            'identityClass' => 'shop\entities\User\User',
             'enableAutoLogin' => true,
             'identityCookie' => [
                 'name' => '_identity',
                 'httpOnly' => true,
                 'domain' => $params['cookieDomain']
             ],
+            'loginUrl' => ['auth/login'],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the backend

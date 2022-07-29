@@ -36,7 +36,7 @@ class SignupController extends Controller
         ];
     }
 
-    public function actionSignup()
+    public function actionRequest()
     {
         $form = new SignupForm();
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
@@ -50,9 +50,22 @@ class SignupController extends Controller
             }
         }
 
-        return $this->render('signup', [
+        return $this->render('request', [
             'model' => $form,
         ]);
+    }
+
+    public function actionConfirm($token)
+    {
+        try {
+            $this->service->confirm($token);
+            Yii::$app->session->setFlash('success', 'Your email is confirmed');
+            return $this->redirect(['auth/auth/login']);
+        } catch (DomainException $e) {
+            Yii::$app->errorHandler->logException($e);
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }
+        return $this->goHome();
     }
 
 }

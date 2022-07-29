@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\forms\UserSearch;
 use shop\entities\User\User;
 use shop\forms\manage\User\UserEditForm;
 use shop\services\manage\UserManageService;
@@ -34,7 +35,13 @@ class UserController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $searchModel = new UserSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     public function actionView($id)
