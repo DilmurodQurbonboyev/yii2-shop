@@ -2,11 +2,11 @@
 
 namespace frontend\controllers\auth;
 
-use Yii;
 use DomainException;
-use yii\web\Controller;
-use shop\forms\LoginForm;
+use shop\forms\auth\LoginForm;
 use shop\services\auth\AuthService;
+use Yii;
+use yii\web\Controller;
 
 class AuthController extends Controller
 {

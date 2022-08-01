@@ -3,7 +3,7 @@
 namespace shop\services\auth;
 
 use shop\entities\User\User;
-use shop\repositories\UserRepository;
+use shop\repositories\User\UserRepository;
 
 class NetworkService
 {

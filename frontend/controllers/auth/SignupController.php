@@ -2,12 +2,12 @@
 
 namespace frontend\controllers\auth;
 
-use Yii;
 use DomainException;
-use yii\web\Controller;
-use shop\forms\SignupForm;
-use yii\filters\AccessControl;
+use shop\forms\auth\SignupForm;
 use shop\services\auth\SignupService;
+use Yii;
+use yii\filters\AccessControl;
+use yii\web\Controller;
 
 class SignupController extends Controller
 {

@@ -22,7 +22,8 @@
         "la-haute-societe/yii2-save-relations-behavior": "^1.7",
         "yiisoft/yii2-authclient": "^2.2",
         "kartik-v/yii2-widget-datepicker": "dev-master",
-        "kartik-v/yii2-field-range": "dev-master"
+        "kartik-v/yii2-field-range": "dev-master",
+        "paulzi/yii2-nested-sets": "^1.1"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

@@ -5,7 +5,7 @@ namespace shop\services\manage;
 use shop\entities\User\User;
 use shop\forms\manage\User\UserCreateForm;
 use shop\forms\manage\User\UserEditForm;
-use shop\repositories\UserRepository;
+use shop\repositories\User\UserRepository;
 
 class UserManageService
 {

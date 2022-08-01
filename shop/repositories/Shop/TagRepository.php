@@ -1,8 +1,9 @@
 <?php
 
-namespace shop\repositories;
+namespace shop\repositories\Shop;
 
 use shop\entities\Shop\Tag;
+use shop\repositories\NotFoundException;
 
 class TagRepository
 {

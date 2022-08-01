@@ -6,7 +6,7 @@ use yii\db\ActiveRecord;
 
 class Tag extends ActiveRecord
 {
-    public function create($name, $slug): self
+    public static function create($name, $slug): self
     {
         $tag = new static();
         $tag->name = $name;

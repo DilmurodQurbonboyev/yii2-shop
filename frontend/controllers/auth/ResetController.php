@@ -2,9 +2,8 @@
 
 namespace frontend\controllers\auth;
 
-use DomainException;
-use shop\forms\PasswordResetRequestForm;
-use shop\forms\ResetPasswordForm;
+use shop\forms\auth\PasswordResetRequestForm;
+use shop\forms\auth\ResetPasswordForm;
 use shop\services\auth\PasswordResetService;
 use Yii;
 use yii\web\BadRequestHttpException;

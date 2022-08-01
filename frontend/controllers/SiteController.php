@@ -2,22 +2,9 @@
 
 namespace frontend\controllers;
 
-use DomainException;
-use Yii;
-use yii\web\Controller;
-use shop\forms\LoginForm;
-use shop\forms\SignupForm;
-use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use shop\forms\VerifyEmailForm;
-use shop\forms\ResetPasswordForm;
-use shop\services\auth\AuthService;
-use yii\web\BadRequestHttpException;
-use shop\services\auth\SignupService;
-use yii\base\InvalidArgumentException;
-use shop\forms\PasswordResetRequestForm;
-use shop\forms\ResendVerificationEmailForm;
-use shop\services\auth\PasswordResetService;
+use yii\filters\VerbFilter;
+use yii\web\Controller;
 
 class SiteController extends Controller
 {
