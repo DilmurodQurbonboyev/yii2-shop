@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'id',
                     'username',
                     'email:email',
-                    'phone',
+//                    'phone',
                     [
                         'attribute' => 'status',
                         'value' => UserHelper::statusLabel($model->status),
@@ -42,7 +42,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     [
                         'label' => 'Role',
-                        'value' => implode(', ', ArrayHelper::getColumn(Yii::$app->authManager->getRolesByUser($model->id), 'description')),
+//                        'value' => implode(', ', ArrayHelper::getColumn(Yii::$app->authManager->getRolesByUser($model->id), 'description')),
+                        'value' => '',
                         'format' => 'raw',
                     ],
                     'created_at:datetime',

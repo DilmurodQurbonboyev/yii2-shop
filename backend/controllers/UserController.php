@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use backend\forms\UserSearch;
 use shop\entities\User\User;
+use shop\forms\manage\User\UserCreateForm;
 use shop\forms\manage\User\UserEditForm;
 use shop\services\manage\UserManageService;
 use Yii;
@@ -53,7 +54,7 @@ class UserController extends Controller
 
     public function actionCreate()
     {
-        $form = new User();
+        $form = new UserCreateForm();
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
                 $user = $this->service->create($form);

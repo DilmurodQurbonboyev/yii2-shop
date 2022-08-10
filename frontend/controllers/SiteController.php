@@ -2,9 +2,12 @@
 
 namespace frontend\controllers;
 
+use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
+use shop\entities\User\Network;
+use shop\entities\User\User;
 
 class SiteController extends Controller
 {
@@ -19,7 +22,7 @@ class SiteController extends Controller
                 'rules' => [
                     [
 
-                 'actions' => ['signup'],
+                        'actions' => ['signup'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
@@ -52,8 +55,13 @@ class SiteController extends Controller
         ];
     }
 
+    //'UPDATE user SET status = 10 WHERE id = 3'
+    //'SELECT * FROM user'
     public function actionIndex()
     {
+        // $users = Yii::$app->db->createCommand('SELECT * FROM user_networks')->queryAll();
+        // var_dump($users);
+        // die;
         return $this->render('index');
     }
 

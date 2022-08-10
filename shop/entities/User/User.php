@@ -1,13 +1,14 @@
 <?php
+
 namespace shop\entities\User;
 
-use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
 use Yii;
-use yii\base\NotSupportedException;
-use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use yii\base\NotSupportedException;
+use yii\behaviors\TimestampBehavior;
+use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
 
 /**
  * User model
@@ -44,7 +45,7 @@ class User extends ActiveRecord implements IdentityInterface
         $user->status = self::STATUS_WAIT;
         $user->generateAuthKey();
         $user->generateEmailConfirmToken();
-        $user->generateEmailVerificationToken();
+        // $user->generateEmailVerificationToken();
         return $user;
     }
 
@@ -94,6 +95,18 @@ class User extends ActiveRecord implements IdentityInterface
         return $user;
     }
 
+    public function attachNetwork($network, $identity): void
+    {
+        $networks = $this->networks;
+        foreach ($networks as $current):
+            if ($current->isFor($network, $identity)):
+                throw new \DomainException('Network is already attached');
+            endif;
+        endforeach;
+        $networks[] = Network::create($network, $identity);
+        $this->networks = $networks;
+    }
+
     public function isActive(): bool
     {
         return $this->status === self::STATUS_ACTIVE;
@@ -136,6 +149,17 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             TimestampBehavior::class,
+            [
+                'class' => SaveRelationsBehavior::class,
+                'relations' => ['networks'],
+            ],
+        ];
+    }
+
+    public function transactions()
+    {
+        return [
+            self::SCENARIO_DEFAULT => self::OP_ALL,
         ];
     }
 

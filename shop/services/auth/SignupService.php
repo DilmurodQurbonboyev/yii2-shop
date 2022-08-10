@@ -5,6 +5,8 @@ namespace shop\services\auth;
 use shop\entities\User\User;
 use shop\forms\auth\SignupForm;
 use yii\mail\MailerInterface;
+use DomainException;
+use RuntimeException;
 
 class SignupService
 {
@@ -17,11 +19,11 @@ class SignupService
 
     public function signup(SignupForm $form)
     {
-        if (User::find()->andWhere(['username' => $form->username])) {
-            throw new \DomainException('Username is already exists.');
+        if (User::find()->andWhere(['username' => $form->username])->exists()) {
+            throw new DomainException('Username is already exists.');
         }
-        if (User::find()->andWhere(['email' => $form->email])) {
-            throw new \DomainException('Email is already exists.');
+        if (User::find()->andWhere(['email' => $form->email])->exists()) {
+            throw new DomainException('Email is already exists.');
         }
 
         $user = User::requestSignup(
@@ -30,7 +32,7 @@ class SignupService
             $form->password,
         );
 
-        
+
 
         $this->save($user);
 
@@ -51,7 +53,7 @@ class SignupService
     public function confirm($token): void
     {
         if (empty($token)) {
-            throw new \DomainException('Empty confirm token.');
+            throw new DomainException('Empty confirm token.');
         }
 
         $user = $this->getByEmailConfirmToken($token);
@@ -62,7 +64,7 @@ class SignupService
     public function getByEmailConfirmToken(string $token): User
     {
         if (!$user = User::findOne(['email_confirm_token' => $token])) {
-            throw new \DomainException('User is not found');
+            throw new DomainException('User is not found');
         }
         return $user;
     }
@@ -70,7 +72,7 @@ class SignupService
     private function save(User $user): void
     {
         if (!$user->save()) {
-            throw new \RuntimeException('Saving error.');
+            throw new RuntimeException('Saving error.');
         }
     }
 }

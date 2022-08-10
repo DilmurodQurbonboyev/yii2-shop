@@ -3,8 +3,9 @@
 namespace shop\forms\manage\User;
 
 use shop\entities\User\User;
+use yii\base\Model;
 
-class UserEditForm
+class UserEditForm extends Model
 {
     public $username;
     public $email;

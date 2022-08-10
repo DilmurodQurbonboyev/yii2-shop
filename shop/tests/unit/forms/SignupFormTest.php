@@ -2,8 +2,10 @@
 
 namespace shop\tests\unit\forms;
 
+use Yii;
 use common\fixtures\UserFixture;
-use forms\SignupForm;
+use shop\entities\User\User;
+use shop\forms\auth\SignupForm;
 
 class SignupFormTest extends \Codeception\Test\Unit
 {
@@ -38,7 +40,7 @@ class SignupFormTest extends \Codeception\Test\Unit
         $user = $this->tester->grabRecord('entities\User', [
             'username' => 'some_username',
             'email' => 'some_email@example.com',
-            'status' => \entities\User::STATUS_INACTIVE
+            'status' => User::STATUS_INACTIVE
         ]);
 
         $this->tester->seeEmailIsSent();
@@ -47,7 +49,7 @@ class SignupFormTest extends \Codeception\Test\Unit
 
         expect($mail)->isInstanceOf('yii\mail\MessageInterface');
         expect($mail->getTo())->hasKey('some_email@example.com');
-        expect($mail->getFrom())->hasKey(\Yii::$app->params['supportEmail']);
+        expect($mail->getFrom())->hasKey(Yii::$app->params['supportEmail']);
         expect($mail->getSubject())->equals('Account registration at ' . \Yii::$app->name);
         expect($mail->toString())->stringContainsString($user->verification_token);
     }

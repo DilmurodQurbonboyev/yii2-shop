@@ -3,6 +3,7 @@
 namespace shop\repositories\User;
 
 use shop\entities\User\User;
+use shop\repositories\NotFoundException;
 
 class UserRepository
 {
@@ -13,6 +14,11 @@ class UserRepository
             ['username' => $value],
             ['email' => $value]
         ])->one();
+    }
+
+    public function get($id): User
+    {
+        return $this->getBy(['id' => $id]);
     }
 
     public function findByNetworkIdentity($network, $identity): ?User
