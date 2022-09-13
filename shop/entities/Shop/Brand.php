@@ -2,9 +2,9 @@
 
 namespace shop\entities\Shop;
 
-use shop\entities\behaviors\MetaBehavior;
 use shop\entities\Meta;
 use yii\db\ActiveRecord;
+use shop\entities\behaviors\MetaBehavior;
 
 class Brand extends ActiveRecord
 {

@@ -10,5 +10,10 @@ class CreateTest extends Unit
 {
     public function testSuccess()
     {
+        $tag = Tag::create(
+            $name = 'Name',
+            $slug = 'slug',
+        );
+        $this->assertEquals($name, $tag->name);
     }
 }

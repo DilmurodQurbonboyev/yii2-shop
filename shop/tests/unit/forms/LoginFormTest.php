@@ -1,6 +1,6 @@
 <?php
 
-namespace common\tests\unit\forms;
+namespace shop\tests\unit\forms;
 
 use common\fixtures\UserFixture;
 use forms\LoginForm;

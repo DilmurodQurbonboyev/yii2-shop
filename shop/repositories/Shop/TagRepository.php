@@ -4,6 +4,7 @@ namespace shop\repositories\Shop;
 
 use shop\entities\Shop\Tag;
 use shop\repositories\NotFoundException;
+use yii\db\StaleObjectException;
 
 class TagRepository
 {
@@ -22,6 +23,9 @@ class TagRepository
         }
     }
 
+    /**
+     * @throws StaleObjectException
+     */
     public function remove(Tag $tag): void
     {
         if (!$tag->delete()) {

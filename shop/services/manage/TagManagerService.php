@@ -5,10 +5,11 @@ namespace shop\services\manage;
 use shop\entities\Shop\Tag;
 use shop\forms\manage\Shop\TagForm;
 use shop\repositories\Shop\TagRepository;
+use yii\db\StaleObjectException;
 
 class TagManagerService
 {
-    private $tags;
+    private TagRepository $tags;
 
     public function __construct(TagRepository $tags)
     {
@@ -35,6 +36,9 @@ class TagManagerService
         $this->tags->save($tag);
     }
 
+    /**
+     * @throws StaleObjectException
+     */
     public function remove($id): void
     {
         $tag = $this->tags->get($id);

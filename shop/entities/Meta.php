@@ -8,7 +8,12 @@ class Meta
     public $description;
     public $keywords;
 
-    public function __construct($title, $description, $keywords)
+    public function __construct
+    (
+        $title,
+        $description,
+        $keywords
+    )
     {
         $this->title = $title;
         $this->description = $description;

@@ -7,7 +7,7 @@ use shop\repositories\NotFoundException;
 
 class UserRepository
 {
-    public function findByUsernameOrEmail($value): ?User
+    public function findByUsernameOrEmail($value)
     {
         return User::find()->andWhere([
             'or',
@@ -16,12 +16,12 @@ class UserRepository
         ])->one();
     }
 
-    public function get($id): User
+    public function get($id)
     {
         return $this->getBy(['id' => $id]);
     }
 
-    public function findByNetworkIdentity($network, $identity): ?User
+    public function findByNetworkIdentity($network, $identity)
     {
         return User::find()->joinWith('networks n')->andWhere([
             'n.network' => $network,
@@ -29,22 +29,22 @@ class UserRepository
         ])->one();
     }
 
-    public function getByEmailConfirmToken($token): User
+    public function getByEmailConfirmToken($token)
     {
         return $this->getBy(['email_confirm_token' => $token]);
     }
 
-    public function getByEmail($email): User
+    public function getByEmail($email)
     {
         return $this->getBy(['email' => $email]);
     }
 
-    public function getByPasswordResetToken($token): User
+    public function getByPasswordResetToken($token)
     {
         return $this->getBy(['password_reset_token' => $token]);
     }
 
-    public function existsByPasswordResetToken(string $token): User
+    public function existsByPasswordResetToken(string $token)
     {
         return (bool)User::findByPasswordResetToken($token);
     }

@@ -2,17 +2,18 @@
 
 namespace shop\entities\behaviors;
 
-use shop\entities\Meta;
-use yii\base\Behavior;
+use Exception;
 use yii\base\Event;
+use yii\helpers\Json;
+use yii\base\Behavior;
+use shop\entities\Meta;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
-use yii\helpers\Json;
 
 class MetaBehavior extends Behavior
 {
-    public $attribute = 'meta';
-    public $jsonAttribute = 'meta_json';
+    public string $attribute = 'meta';
+    public string $jsonAttribute = 'meta_json';
 
     public function events(): array
     {
@@ -23,6 +24,9 @@ class MetaBehavior extends Behavior
         ];
     }
 
+    /**
+     * @throws  Exception
+     */
     public function onAfterFind(Event $event): void
     {
         $model = $event->sender;

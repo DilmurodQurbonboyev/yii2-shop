@@ -3,13 +3,14 @@
 namespace shop\forms;
 
 use yii\base\Model;
+use yii\helpers\ArrayHelper;
 
-class CompositeForm extends Model
+abstract class CompositeForm extends Model
 {
     /**
      * @var Model[]|array[]
      */
-    private $forms = [];
+    private array $forms = [];
 
     abstract protected function internalForms(): array;
 
@@ -24,6 +25,11 @@ class CompositeForm extends Model
             }
         }
         return $success;
+    }
+
+    public function loadInternal(array $data, Model $form, $formName, $name): bool
+    {
+        return $form->load($data, $formName ? null : $name);
     }
 
     public function validate($attributeNames = null, $clearErrors = true): bool

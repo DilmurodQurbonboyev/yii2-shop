@@ -2,19 +2,19 @@
 
 namespace backend\controllers;
 
-use backend\forms\UserSearch;
-use shop\entities\User\User;
-use shop\forms\manage\User\UserCreateForm;
-use shop\forms\manage\User\UserEditForm;
-use shop\services\manage\UserManageService;
 use Yii;
-use yii\filters\VerbFilter;
 use yii\web\Controller;
+use yii\filters\VerbFilter;
+use shop\entities\User\User;
+use backend\forms\UserSearch;
 use yii\web\NotFoundHttpException;
+use shop\forms\manage\User\UserEditForm;
+use shop\forms\manage\User\UserCreateForm;
+use shop\services\manage\UserManageService;
 
 class UserController extends Controller
 {
-    private $service;
+    private UserManageService $service;
 
     public function __construct($id, $module, UserManageService $service, $config = [])
     {
@@ -22,7 +22,7 @@ class UserController extends Controller
         $this->service = $service;
     }
 
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'verbs' => [
@@ -34,7 +34,7 @@ class UserController extends Controller
         ];
     }
 
-    public function actionIndex()
+    public function actionIndex(): string
     {
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
