@@ -19,7 +19,7 @@ class Characteristic extends ActiveRecord
         $object->name = $name;
         $object->type = $type;
         $object->required= $required;
-        $object->defualt = $default;
+        $object->default = $default;
         $object->variants = $variants;
         $object->sort = $sort;
         return $object;
@@ -30,7 +30,7 @@ class Characteristic extends ActiveRecord
         $this->name = $name;
         $this->type = $type;
         $this->required= $required;
-        $this->defualt = $default;
+        $this->default = $default;
         $this->variants = $variants;
         $this->sort = $sort;
     }

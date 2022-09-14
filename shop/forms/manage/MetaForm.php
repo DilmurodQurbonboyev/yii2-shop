@@ -21,7 +21,7 @@ class MetaForm extends Model
         parent::__construct($config);
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['name', 'slug'], 'required'],

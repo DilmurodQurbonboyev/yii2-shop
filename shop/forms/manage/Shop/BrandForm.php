@@ -31,20 +31,6 @@ class BrandForm extends CompositeForm
         parent::__construct($config);
     }
 
-    public function load($data, $formName = null)
-    {
-        $self = parent::load($data, $formName);
-        $meta = $this->_meta->load($data, $formName);
-        return $self && $meta;
-    }
-
-    public function validate($attributeNames = null, $clearErrors = true)
-    {
-        $self = parent::validate($attributeNames, $clearErrors);
-        $meta = $this->_meta->validate(null, $clearErrors);
-        return $self && $meta;
-    }
-
     public function rules(): array
     {
         return [

@@ -7,7 +7,7 @@ use shop\forms\manage\Shop\TagForm;
 use shop\repositories\Shop\TagRepository;
 use yii\db\StaleObjectException;
 
-class TagManagerService
+class TagManageService
 {
     private TagRepository $tags;
 
