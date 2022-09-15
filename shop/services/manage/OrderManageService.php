@@ -1,6 +1,6 @@
 <?php
 
-namespace shop\useCases\manage\Shop;
+namespace shop\services\manage;
 
 use shop\entities\Shop\Order\CustomerData;
 use shop\entities\Shop\Order\DeliveryData;

@@ -2,9 +2,9 @@
 
 namespace shop\entities\Shop\Product;
 
-use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
-class CategoryAssignment extends ActiveQuery
+class CategoryAssignment extends ActiveRecord
 {
     public static function create($categoryId): self
     {
@@ -18,7 +18,7 @@ class CategoryAssignment extends ActiveQuery
         return $this->category_id = $id;
     }
 
-    public static function tableName()
+    public static function tableName(): string
     {
         return '{{%shop_category_assignments}}';
     }

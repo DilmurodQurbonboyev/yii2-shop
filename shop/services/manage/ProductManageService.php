@@ -1,6 +1,6 @@
 <?php
 
-namespace shop\useCases\manage\Shop;
+namespace shop\services\manage;
 
 use shop\entities\Meta;
 use shop\entities\Shop\Product\Product;
@@ -20,11 +20,11 @@ use shop\services\TransactionManager;
 
 class ProductManageService
 {
-    private $products;
-    private $brands;
-    private $categories;
-    private $tags;
-    private $transaction;
+    private ProductRepository $products;
+    private BrandRepository $brands;
+    private CategoryRepository $categories;
+    private TagRepository $tags;
+    private TransactionManager $transaction;
 
     public function __construct(
         ProductRepository $products,
@@ -41,6 +41,9 @@ class ProductManageService
         $this->transaction = $transaction;
     }
 
+    /**
+     * @throws \Exception
+     */
     public function create(ProductCreateForm $form): Product
     {
         $brand = $this->brands->get($form->brandId);
@@ -95,6 +98,9 @@ class ProductManageService
         return $product;
     }
 
+    /**
+     * @throws \Exception
+     */
     public function edit($id, ProductEditForm $form): void
     {
         $product = $this->products->get($id);

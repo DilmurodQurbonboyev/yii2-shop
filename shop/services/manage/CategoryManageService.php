@@ -1,6 +1,6 @@
 <?php
 
-namespace shop\useCases\manage\Shop;
+namespace shop\services\manage;
 
 use shop\entities\Meta;
 use shop\entities\Shop\Category;
@@ -10,8 +10,8 @@ use shop\repositories\Shop\ProductRepository;
 
 class CategoryManageService
 {
-    private $categories;
-    private $products;
+    private CategoryRepository $categories;
+    private ProductRepository $products;
 
     public function __construct(CategoryRepository $categories, ProductRepository $products)
     {

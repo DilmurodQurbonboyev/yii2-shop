@@ -16,6 +16,7 @@ use shop\entities\User\WishlistItem;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\db\Exception;
+use yii\db\StaleObjectException;
 use yii\web\UploadedFile;
 
 /**
@@ -48,10 +49,8 @@ use yii\web\UploadedFile;
  * @property Photo $mainPhoto
  * @property Review[] $reviews
  */
-class Product extends ActiveRecord implements AggregateRoot
+class Product extends ActiveRecord
 {
-    use EventTrait;
-
     const STATUS_DRAFT = 0;
     const STATUS_ACTIVE = 1;
 
@@ -79,13 +78,13 @@ class Product extends ActiveRecord implements AggregateRoot
         $this->price_old = $old;
     }
 
-    public function changeQuantity($quantity): void
-    {
-        if ($this->modifications) {
-            throw new \DomainException('Change modifications quantity.');
-        }
-        $this->setQuantity($quantity);
-    }
+//    public function changeQuantity($quantity): void
+//    {
+//        if ($this->modifications) {
+//            throw new \DomainException('Change modifications quantity.');
+//        }
+//        $this->setQuantity($quantity);
+//    }
 
     public function edit($brandId, $code, $name, $description, $weight, Meta $meta): void
     {
@@ -147,23 +146,23 @@ class Product extends ActiveRecord implements AggregateRoot
         return $quantity <= $this->quantity;
     }
 
-    public function checkout($modificationId, $quantity): void
-    {
-        if ($modificationId) {
-            $modifications = $this->modifications;
-            foreach ($modifications as $i => $modification) {
-                if ($modification->isIdEqualTo($modificationId)) {
-                    $modification->checkout($quantity);
-                    $this->updateModifications($modifications);
-                    return;
-                }
-            }
-        }
-        if ($quantity > $this->quantity) {
-            throw new \DomainException('Only ' . $this->quantity . ' items are available.');
-        }
-        $this->setQuantity($this->quantity - 1);
-    }
+//    public function checkout($modificationId, $quantity): void
+//    {
+//        if ($modificationId) {
+//            $modifications = $this->modifications;
+//            foreach ($modifications as $i => $modification) {
+//                if ($modification->isIdEqualTo($modificationId)) {
+//                    $modification->checkout($quantity);
+//                    $this->updateModifications($modifications);
+//                    return;
+//                }
+//            }
+//        }
+//        if ($quantity > $this->quantity) {
+//            throw new \DomainException('Only ' . $this->quantity . ' items are available.');
+//        }
+//        $this->setQuantity($this->quantity - 1);
+//    }
 
 //    private function setQuantity($quantity): void
 //    {
@@ -263,13 +262,13 @@ class Product extends ActiveRecord implements AggregateRoot
         throw new \DomainException('Modification is not found.');
     }
 
-    private function updateModifications(array $modifications): void
-    {
-        $this->modifications = $modifications;
-        $this->setQuantity(array_sum(array_map(function (Modification $modification) {
-            return $modification->quantity;
-        }, $this->modifications)));
-    }
+//    private function updateModifications(array $modifications): void
+//    {
+//        $this->modifications = $modifications;
+//        $this->setQuantity(array_sum(array_map(function (Modification $modification) {
+//            return $modification->quantity;
+//        }, $this->modifications)));
+//    }
 
     // Categories
 
@@ -506,12 +505,12 @@ class Product extends ActiveRecord implements AggregateRoot
 
     public function getBrand(): ActiveQuery
     {
-        return $this->hasOne(Brand::class, ['id' => 'brand_id']);
+        return $this->hasMany(Brand::class, ['id' => 'brand_id']);
     }
 
     public function getCategory(): ActiveQuery
     {
-        return $this->hasOne(Category::class, ['id' => 'category_id']);
+        return $this->hasMany(Category::class, ['id' => 'category_id']);
     }
 
     public function getCategoryAssignments(): ActiveQuery
@@ -551,7 +550,7 @@ class Product extends ActiveRecord implements AggregateRoot
 
     public function getMainPhoto(): ActiveQuery
     {
-        return $this->hasOne(Photo::class, ['id' => 'main_photo_id']);
+        return $this->hasMany(Photo::class, ['id' => 'main_photo_id']);
     }
 
     public function getRelatedAssignments(): ActiveQuery
@@ -569,10 +568,10 @@ class Product extends ActiveRecord implements AggregateRoot
         return $this->hasMany(Review::class, ['product_id' => 'id']);
     }
 
-    public function getWishlistItems(): ActiveQuery
-    {
-        return $this->hasMany(WishlistItem::class, ['product_id' => 'id']);
-    }
+//    public function getWishlistItems(): ActiveQuery
+//    {
+//        return $this->hasMany(WishlistItem::class, ['product_id' => 'id']);
+//    }
 
     ##########################
 
@@ -584,21 +583,24 @@ class Product extends ActiveRecord implements AggregateRoot
     public function behaviors(): array
     {
         return [
-            MetaBehavior::className(),
+            MetaBehavior::class,
             [
-                'class' => SaveRelationsBehavior::className(),
+                'class' => SaveRelationsBehavior::class,
                 'relations' => ['categoryAssignments', 'tagAssignments', 'relatedAssignments', 'modifications', 'values', 'photos', 'reviews'],
             ],
         ];
     }
 
-    public function transactions()
+    public function transactions(): array
     {
         return [
             self::SCENARIO_DEFAULT => self::OP_ALL,
         ];
     }
 
+    /**
+     * @throws StaleObjectException
+     */
     public function beforeDelete(): bool
     {
         if (parent::beforeDelete()) {

@@ -9,7 +9,7 @@ use shop\repositories\User\UserRepository;
 
 class UserManageService
 {
-    private $repository;
+    private UserRepository $repository;
 
     public function __construct(UserRepository $repository)
     {
