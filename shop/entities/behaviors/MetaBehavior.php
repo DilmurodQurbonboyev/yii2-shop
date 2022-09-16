@@ -12,8 +12,8 @@ use yii\helpers\ArrayHelper;
 
 class MetaBehavior extends Behavior
 {
-    public string $attribute = 'meta';
-    public string $jsonAttribute = 'meta_json';
+    public $attribute = 'meta';
+    public $jsonAttribute = 'meta_json';
 
     public function events(): array
     {

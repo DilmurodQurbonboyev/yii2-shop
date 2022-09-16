@@ -3,10 +3,10 @@
 namespace backend\forms\Shop;
 
 use yii\base\Model;
-use shop\entities\Shop\Brand;
+use shop\entities\Shop\Category;
 use yii\data\ActiveDataProvider;
 
-class BrandSearch extends Brand
+class CategorySearch extends Category
 {
     public $id;
     public $name;
@@ -28,12 +28,12 @@ class BrandSearch extends Brand
 
     public function search($params)
     {
-        $query = Brand::find();
+        $query = Category::find()->where(['>', 'depth', 0]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
-                'defaultOrder' => ['name' => SORT_ASC]
+                'defaultOrder' => ['lft' => SORT_ASC]
             ]
         ]);
 

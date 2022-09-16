@@ -7,9 +7,6 @@ use yii\helpers\ArrayHelper;
 
 abstract class CompositeForm extends Model
 {
-    /**
-     * @var Model[]|array[]
-     */
     private array $forms = [];
 
     abstract protected function internalForms(): array;
@@ -25,11 +22,6 @@ abstract class CompositeForm extends Model
             }
         }
         return $success;
-    }
-
-    public function loadInternal(array $data, Model $form, $formName, $name): bool
-    {
-        return $form->load($data, $formName ? null : $name);
     }
 
     public function validate($attributeNames = null, $clearErrors = true): bool

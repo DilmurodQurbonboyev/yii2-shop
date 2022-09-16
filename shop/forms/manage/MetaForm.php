@@ -24,8 +24,9 @@ class MetaForm extends Model
     public function rules(): array
     {
         return [
-            [['name', 'slug'], 'required'],
-            [['name', 'slug'], 'string', 'max' => 255],
+//            [['title', 'description', 'keywords'], 'required'],
+            [['title', 'description'], 'string', 'max' => 255],
+            [['keywords'], 'string'],
         ];
     }
 }

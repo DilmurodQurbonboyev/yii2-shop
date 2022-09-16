@@ -3,16 +3,16 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model shop\entities\Shop\Brand */
+/* @var $brand \shop\entities\Shop\Brand */
+/* @var $model \shop\forms\manage\Shop\BrandForm */
 
-$this->title = 'Update Brand: ' . $model->name;
+$this->title = 'Update Brand: ' . $brand->name;
 $this->params['breadcrumbs'][] = ['label' => 'Brands', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => $brand->name, 'url' => ['view', 'id' => $brand->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
-<div class="brand-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="brand-update">
 
     <?= $this->render('_form', [
         'model' => $model,

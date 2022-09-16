@@ -6,6 +6,13 @@ use shop\entities\Meta;
 use yii\db\ActiveRecord;
 use shop\entities\behaviors\MetaBehavior;
 
+/**
+ * @property integer $id
+ * @property string $name
+ * @property string $slug
+ * @property Meta $meta
+ */
+
 class Brand extends ActiveRecord
 {
     public $meta;

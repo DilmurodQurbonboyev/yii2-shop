@@ -3,6 +3,7 @@
 namespace shop\forms\manage\Shop;
 
 use shop\entities\Shop\Characteristic;
+use shop\helpers\CharacteristicHelper;
 use yii\base\Model;
 
 class CharacteristicForm extends Model
@@ -30,6 +31,11 @@ class CharacteristicForm extends Model
             $this->sort = Characteristic::find()->max('sort') + 1;
         }
         parent::__construct($config);
+    }
+
+    public function typesList(): array
+    {
+        return CharacteristicHelper::typeList();
     }
 
     public function rules(): array

@@ -3,10 +3,10 @@
 namespace backend\forms\Shop;
 
 use yii\base\Model;
-use shop\entities\Shop\Brand;
+use shop\entities\Shop\Characteristic;
 use yii\data\ActiveDataProvider;
 
-class BrandSearch extends Brand
+class CharacteristicSearch extends Characteristic
 {
     public $id;
     public $name;
@@ -15,8 +15,8 @@ class BrandSearch extends Brand
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['name', 'slug'], 'safe'],
+            [['id', 'type', 'required'], 'integer'],
+            [['name'], 'safe'],
         ];
     }
 
@@ -28,12 +28,12 @@ class BrandSearch extends Brand
 
     public function search($params)
     {
-        $query = Brand::find();
+        $query = Characteristic::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
-                'defaultOrder' => ['name' => SORT_ASC]
+                'defaultOrder' => ['sort' => SORT_ASC]
             ]
         ]);
 

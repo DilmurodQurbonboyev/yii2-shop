@@ -5,17 +5,17 @@ namespace backend\controllers\shop;
 use yii\web\Response;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
-use shop\entities\Shop\Brand;
 use yii\web\NotFoundHttpException;
-use backend\forms\Shop\BrandSearch;
-use shop\forms\manage\Shop\BrandForm;
-use shop\services\manage\BrandManageService;
+use backend\forms\Shop\ProductSearch;
+use shop\entities\Shop\Product\Product;
+use shop\services\manage\ProductManageService;
+use shop\forms\manage\Shop\Product\ProductCreateForm;
 
-class BrandController extends Controller
+class ProductController extends Controller
 {
-    private BrandManageService $service;
+    private ProductManageService $service;
 
-    public function __construct($id, $module, BrandManageService $service, $config = [])
+    public function __construct($id, $module, ProductManageService $service, $config = [])
     {
         parent::__construct($id, $module, $config);
         $this->service = $service;
@@ -38,7 +38,7 @@ class BrandController extends Controller
 
     public function actionIndex(): string
     {
-        $searchModel = new BrandSearch();
+        $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -50,18 +50,18 @@ class BrandController extends Controller
     public function actionView($id): string
     {
         return $this->render('view', [
-            'brand' => $this->findModel($id),
+            'product' => $this->findModel($id),
         ]);
     }
 
     public function actionCreate()
     {
-        $form = new BrandForm();
+        $form = new ProductCreateForm();
 
         if ($form->load($this->request->post()) && $form->validate()) {
             try {
-                $brand = $this->service->create($form);
-                return $this->redirect(['view', 'id' => $brand->id]);
+                $product = $this->service->create($form);
+                return $this->redirect(['view', 'id' => $product->id]);
             } catch (\DomainException $e) {
                 \Yii::$app->errorHandler->logException($e);
                 \Yii::$app->session->setFlash('error', $e->getMessage());
@@ -74,15 +74,15 @@ class BrandController extends Controller
 
     public function actionUpdate($id)
     {
-        $brand = $this->findModel($id);
+        $product = $this->findModel($id);
 
-        $form = new BrandForm($brand);
+        $form = new ProductCreateForm($product);
 
         if ($form->load($this->request->post()) && $form->validate()) {
 
             try {
-                $this->service->edit($brand->id, $form);
-                return $this->redirect(['view', 'id' => $brand->id]);
+                $this->service->edit($product->id, $form);
+                return $this->redirect(['view', 'id' => $product->id]);
             } catch (\Exception $e) {
                 \Yii::$app->errorHandler->logException($e);
                 \Yii::$app->session->setFlash('error', $e->getMessage());
@@ -90,7 +90,7 @@ class BrandController extends Controller
         }
         return $this->render('update', [
             'model' => $form,
-            'brand' => $brand
+            'product' => $product
         ]);
     }
 
@@ -105,9 +105,9 @@ class BrandController extends Controller
         return $this->redirect(['index']);
     }
 
-    protected function findModel($id): ?Brand
+    protected function findModel($id): ?Product
     {
-        if (($model = Brand::findOne(['id' => $id])) !== null) {
+        if (($model = Product::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

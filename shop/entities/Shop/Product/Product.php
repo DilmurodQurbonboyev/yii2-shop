@@ -619,6 +619,7 @@ class Product extends ActiveRecord
         if (array_key_exists('mainPhoto', $related)) {
             $this->updateAttributes(['main_photo_id' => $related['mainPhoto'] ? $related['mainPhoto']->id : null]);
         }
+        parent::afterSave($insert, $changedAttributes);
     }
 
     public static function find(): ProductQuery

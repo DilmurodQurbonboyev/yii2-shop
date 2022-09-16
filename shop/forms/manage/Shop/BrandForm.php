@@ -16,7 +16,6 @@ class BrandForm extends CompositeForm
     public $slug;
 
     private $_brand;
-    private $_meta;
 
     public function __construct(Brand $brand = null, $config = [])
     {
@@ -25,6 +24,7 @@ class BrandForm extends CompositeForm
             $this->slug = $brand->slug;
             $this->meta = new MetaForm($brand->meta);
             $this->_brand = $brand;
+
         } else {
             $this->meta = new MetaForm();
         }

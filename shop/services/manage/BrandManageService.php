@@ -10,10 +10,14 @@ use shop\repositories\Shop\ProductRepository;
 
 class BrandManageService
 {
-    private $brands;
-    private $products;
+    private BrandRepository $brands;
+    private ProductRepository $products;
 
-    public function __construct(BrandRepository $brands, ProductRepository $products)
+    public function __construct
+    (
+        BrandRepository   $brands,
+        ProductRepository $products
+    )
     {
         $this->brands = $brands;
         $this->products = $products;
@@ -37,6 +41,7 @@ class BrandManageService
     public function edit($id, BrandForm $form): void
     {
         $brand = $this->brands->get($id);
+
         $brand->edit(
             $form->name,
             $form->slug,

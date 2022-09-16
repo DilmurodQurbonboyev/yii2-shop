@@ -5,17 +5,18 @@ namespace backend\controllers\shop;
 use yii\web\Response;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
-use shop\entities\Shop\Brand;
+use shop\entities\Shop\Tag ;
+use backend\forms\Shop\TagSearch;
 use yii\web\NotFoundHttpException;
-use backend\forms\Shop\BrandSearch;
-use shop\forms\manage\Shop\BrandForm;
-use shop\services\manage\BrandManageService;
+use shop\forms\manage\Shop\TagForm;
+use shop\services\manage\TagManageService;
 
-class BrandController extends Controller
+
+class TagController extends Controller
 {
-    private BrandManageService $service;
+    private TagManageService $service;
 
-    public function __construct($id, $module, BrandManageService $service, $config = [])
+    public function __construct($id, $module, TagManageService $service, $config = [])
     {
         parent::__construct($id, $module, $config);
         $this->service = $service;
@@ -38,7 +39,7 @@ class BrandController extends Controller
 
     public function actionIndex(): string
     {
-        $searchModel = new BrandSearch();
+        $searchModel = new TagSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -50,18 +51,18 @@ class BrandController extends Controller
     public function actionView($id): string
     {
         return $this->render('view', [
-            'brand' => $this->findModel($id),
+            'tag' => $this->findModel($id),
         ]);
     }
 
     public function actionCreate()
     {
-        $form = new BrandForm();
+        $form = new TagForm();
 
         if ($form->load($this->request->post()) && $form->validate()) {
             try {
-                $brand = $this->service->create($form);
-                return $this->redirect(['view', 'id' => $brand->id]);
+                $tag = $this->service->create($form);
+                return $this->redirect(['view', 'id' => $tag->id]);
             } catch (\DomainException $e) {
                 \Yii::$app->errorHandler->logException($e);
                 \Yii::$app->session->setFlash('error', $e->getMessage());
@@ -74,15 +75,15 @@ class BrandController extends Controller
 
     public function actionUpdate($id)
     {
-        $brand = $this->findModel($id);
+        $tag = $this->findModel($id);
 
-        $form = new BrandForm($brand);
+        $form = new TagForm($tag);
 
         if ($form->load($this->request->post()) && $form->validate()) {
 
             try {
-                $this->service->edit($brand->id, $form);
-                return $this->redirect(['view', 'id' => $brand->id]);
+                $this->service->edit($tag->id, $form);
+                return $this->redirect(['view', 'id' => $tag->id]);
             } catch (\Exception $e) {
                 \Yii::$app->errorHandler->logException($e);
                 \Yii::$app->session->setFlash('error', $e->getMessage());
@@ -90,7 +91,7 @@ class BrandController extends Controller
         }
         return $this->render('update', [
             'model' => $form,
-            'brand' => $brand
+            'tag' => $tag
         ]);
     }
 
@@ -105,9 +106,9 @@ class BrandController extends Controller
         return $this->redirect(['index']);
     }
 
-    protected function findModel($id): ?Brand
+    protected function findModel($id): ?Tag
     {
-        if (($model = Brand::findOne(['id' => $id])) !== null) {
+        if (($model = Tag ::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

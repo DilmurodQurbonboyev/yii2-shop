@@ -3,10 +3,10 @@
 namespace backend\forms\Shop;
 
 use yii\base\Model;
-use shop\entities\Shop\Brand;
+use shop\entities\Shop\Tag;
 use yii\data\ActiveDataProvider;
 
-class BrandSearch extends Brand
+class TagSearch extends Tag
 {
     public $id;
     public $name;
@@ -28,7 +28,7 @@ class BrandSearch extends Brand
 
     public function search($params)
     {
-        $query = Brand::find();
+        $query = Tag::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
