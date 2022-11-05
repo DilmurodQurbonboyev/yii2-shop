@@ -11,4 +11,6 @@ return [
     'cookieDomain' => '.shop.test',
     'frontendHostInfo' => 'http://shop.test',
     'backendHostInfo' => 'http://admin.shop.test/',
+    'staticHostInfo' => 'http://static.example.com',
+    'staticPath' => dirname(__DIR__) . '/../static',
 ];

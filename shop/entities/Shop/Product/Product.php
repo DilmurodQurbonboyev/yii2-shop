@@ -2,20 +2,15 @@
 
 namespace shop\entities\Shop\Product;
 
-use shop\entities\EventTrait;
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
-use shop\entities\AggregateRoot;
 use shop\entities\behaviors\MetaBehavior;
 use shop\entities\Meta;
 use shop\entities\Shop\Brand;
 use shop\entities\Shop\Category;
-use shop\entities\Shop\Product\events\ProductAppearedInStock;
 use shop\entities\Shop\Product\queries\ProductQuery;
 use shop\entities\Shop\Tag;
-use shop\entities\User\WishlistItem;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
-use yii\db\Exception;
 use yii\db\StaleObjectException;
 use yii\web\UploadedFile;
 
@@ -56,7 +51,7 @@ class Product extends ActiveRecord
 
     public $meta;
 
-    public static function create($brandId, $categoryId, $code, $name, $description, $weight, $quantity, Meta $meta): self
+    public static function create($brandId, $categoryId, $code, $name, $description, Meta $meta): self
     {
         $product = new static();
         $product->brand_id = $brandId;
@@ -64,10 +59,7 @@ class Product extends ActiveRecord
         $product->code = $code;
         $product->name = $name;
         $product->description = $description;
-        $product->weight = $weight;
-        $product->quantity = $quantity;
         $product->meta = $meta;
-        $product->status = self::STATUS_DRAFT;
         $product->created_at = time();
         return $product;
     }
@@ -86,13 +78,13 @@ class Product extends ActiveRecord
 //        $this->setQuantity($quantity);
 //    }
 
-    public function edit($brandId, $code, $name, $description, $weight, Meta $meta): void
+    public function edit($brandId, $code, $name, $description, Meta $meta): void
     {
         $this->brand_id = $brandId;
         $this->code = $code;
         $this->name = $name;
         $this->description = $description;
-        $this->weight = $weight;
+//        $this->weight = $weight;
         $this->meta = $meta;
     }
 
@@ -224,7 +216,7 @@ class Product extends ActiveRecord
         throw new \DomainException('Modification is not found.');
     }
 
-    public function addModification($code, $name, $price, $quantity): void
+    public function addModification($code, $name, $price): void
     {
         $modifications = $this->modifications;
         foreach ($modifications as $modification) {
@@ -232,17 +224,17 @@ class Product extends ActiveRecord
                 throw new \DomainException('Modification already exists.');
             }
         }
-        $modifications[] = Modification::create($code, $name, $price, $quantity);
-        $this->updateModifications($modifications);
+        $modifications[] = Modification::create($code, $name, $price);
+        $this->modifications = $modifications;
     }
 
-    public function editModification($id, $code, $name, $price, $quantity): void
+    public function editModification($id, $code, $name, $price): void
     {
         $modifications = $this->modifications;
         foreach ($modifications as $i => $modification) {
             if ($modification->isIdEqualTo($id)) {
-                $modification->edit($code, $name, $price, $quantity);
-                $this->updateModifications($modifications);
+                $modification->edit($code, $name, $price);
+                $this->modifications = $modifications;
                 return;
             }
         }
@@ -399,7 +391,7 @@ class Product extends ActiveRecord
             $photo->setSort($i);
         }
         $this->photos = $photos;
-        $this->populateRelation('mainPhoto', reset($photos));
+//        $this->populateRelation('mainPhoto', reset($photos));
     }
 
     // Related products

@@ -23,7 +23,12 @@ class m220801_145858_create_shop_categories_table extends Migration
             'depth' => $this->integer()->notNull(),
         ], $tableOptions);
 
-        $this->createIndex('{{%idx-shop_categories-slug}}', '{{%shop_categories}}', 'slug', true);
+        $this->createIndex(
+            '{{%idx-shop_categories-slug}}',
+            '{{%shop_categories}}',
+            'slug',
+            true
+        );
 
         $this->insert('{{%shop_categories}}', [
             'id' => 1,

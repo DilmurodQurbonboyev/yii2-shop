@@ -1,15 +1,11 @@
 <?php
-
 namespace shop\forms\auth;
 
 use shop\entities\User\User;
 use Yii;
 use yii\base\Model;
 
-/**
- * Login form
- */
-class  LoginForm extends Model
+class  LoginForm extends Model 
 {
     public $username;
     public $password;
@@ -55,12 +51,13 @@ class  LoginForm extends Model
      *
      * @return bool whether the user is logged in successfully
      */
-    public function login()
+    public function login(): bool
     {
-        if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+        if ($this->validate() && $this->getUser()) {
+            $user = $this->getUser();
+            return Yii::$app->user->login($user, $this->rememberMe ? 3600 * 24 * 30 : 0);
         }
-        
+
         return false;
     }
 

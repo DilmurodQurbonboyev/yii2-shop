@@ -18,7 +18,7 @@ class Characteristic extends ActiveRecord
         $object = new static();
         $object->name = $name;
         $object->type = $type;
-        $object->required= $required;
+        $object->required = $required;
         $object->default = $default;
         $object->variants = $variants;
         $object->sort = $sort;
@@ -29,18 +29,33 @@ class Characteristic extends ActiveRecord
     {
         $this->name = $name;
         $this->type = $type;
-        $this->required= $required;
+        $this->required = $required;
         $this->default = $default;
         $this->variants = $variants;
         $this->sort = $sort;
     }
 
-    public function isSelect(): bool
+    public function isString(): bool
     {
-        return count($this->variants) > 0;        
+        return $this->type === self::TYPE_STRING;
     }
 
-    public static function tableName()
+    public function isInteger(): bool
+    {
+        return $this->type === self::TYPE_INTEGER;
+    }
+
+    public function isFloat(): bool
+    {
+        return $this->type === self::TYPE_FLOAT;
+    }
+
+    public function isSelect(): bool
+    {
+        return count($this->variants) > 0;
+    }
+
+    public static function tableName(): string
     {
         return '{{%shop_characteristics}}';
     }
@@ -56,5 +71,5 @@ class Characteristic extends ActiveRecord
         $this->setAttribute('variants_json', Json::encode($this->variants));
         return parent::beforeSave($insert);
     }
-        
+
 }

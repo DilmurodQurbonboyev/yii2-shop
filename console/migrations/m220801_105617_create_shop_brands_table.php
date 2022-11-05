@@ -18,7 +18,12 @@ class m220801_105617_create_shop_brands_table extends Migration
             'meta_json' => 'JSON NOT NULL',
         ], $tableOptions);
 
-        $this->createIndex('{{%idx-shop_brands-slug}}', '{{%shop_brands}}', 'slug', true);
+        $this->createIndex(
+            '{{%idx-shop_brands-slug}}',
+            '{{%shop_brands}}',
+            'slug',
+            true
+        );
     }
 
     public function down()

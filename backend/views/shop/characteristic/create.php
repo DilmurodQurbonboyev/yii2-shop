@@ -1,15 +1,13 @@
 <?php
 
-use yii\helpers\Html;
-
 /* @var $this yii\web\View */
-/* @var $model shop\entities\Shop\Category */
+/* @var $model shop\forms\manage\Shop\CharacteristicForm */
 
-$this->title = 'Create Category';
-$this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['index']];
+$this->title = 'Create Characteristic';
+$this->params['breadcrumbs'][] = ['label' => 'Characteristics', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="category-create">
+<div class="characteristic-create">
 
     <?= $this->render('_form', [
         'model' => $model,

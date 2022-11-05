@@ -18,6 +18,11 @@ main > .container {
     font-style: italic;
 }
 
+div.required label.control-label:after {
+    content: " *";
+    color: red;
+}
+
 /* add sorting icons to gridview sort links */
 a.asc:after, a.desc:after {
     content: '';

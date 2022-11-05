@@ -1,23 +1,21 @@
 <?php
 
+use shop\helpers\CharacteristicHelper;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $category \shop\entities\Shop\Category */
+/* @var $characteristic shop\entities\Shop\Characteristic */
 
-$this->title = $category->name;
-$this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['index']];
+$this->title = $characteristic->name;
+$this->params['breadcrumbs'][] = ['label' => 'Characteristics', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
 ?>
-<div class="brand-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="user-view">
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $category->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $category->id], [
+        <?= Html::a('Update', ['update', 'id' => $characteristic->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Delete', ['delete', 'id' => $characteristic->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -27,17 +25,26 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <div class="box">
-        <div class="box-header with-border">Common</div>
         <div class="box-body">
             <?= DetailView::widget([
-                'model' => $category,
+                'model' => $characteristic,
                 'attributes' => [
                     'id',
                     'name',
-                    'slug',
+                    [
+                        'attribute' => 'type',
+                        'value' => CharacteristicHelper::typeName($characteristic->type),
+                    ],
+                    'sort',
+                    'required:boolean',
+                    'default',
+                    [
+                        'attribute' => 'variants',
+                        'value' => implode(PHP_EOL, $characteristic->variants),
+                        'format' => 'ntext',
+                    ],
                 ],
             ]) ?>
         </div>
     </div>
-
 </div>

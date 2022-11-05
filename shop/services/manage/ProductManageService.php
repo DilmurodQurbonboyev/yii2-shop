@@ -2,21 +2,21 @@
 
 namespace shop\services\manage;
 
+use Exception;
 use shop\entities\Meta;
-use shop\entities\Shop\Product\Product;
 use shop\entities\Shop\Tag;
-use shop\forms\manage\Shop\Product\QuantityForm;
-use shop\forms\manage\Shop\Product\CategoriesForm;
-use shop\forms\manage\Shop\Product\ModificationForm;
-use shop\forms\manage\Shop\Product\PhotosForm;
-use shop\forms\manage\Shop\Product\PriceForm;
-use shop\forms\manage\Shop\Product\ProductCreateForm;
-use shop\forms\manage\Shop\Product\ProductEditForm;
-use shop\repositories\Shop\BrandRepository;
-use shop\repositories\Shop\CategoryRepository;
-use shop\repositories\Shop\ProductRepository;
-use shop\repositories\Shop\TagRepository;
 use shop\services\TransactionManager;
+use shop\entities\Shop\Product\Product;
+use shop\repositories\Shop\TagRepository;
+use shop\repositories\Shop\BrandRepository;
+use shop\repositories\Shop\ProductRepository;
+use shop\forms\manage\Shop\Product\PriceForm;
+use shop\forms\manage\Shop\Product\PhotosForm;
+use shop\repositories\Shop\CategoryRepository;
+use shop\forms\manage\Shop\Product\QuantityForm;
+use shop\forms\manage\Shop\Product\ProductEditForm;
+use shop\forms\manage\Shop\Product\ModificationForm;
+use shop\forms\manage\Shop\Product\ProductCreateForm;
 
 class ProductManageService
 {
@@ -27,10 +27,10 @@ class ProductManageService
     private TransactionManager $transaction;
 
     public function __construct(
-        ProductRepository $products,
-        BrandRepository $brands,
+        ProductRepository  $products,
+        BrandRepository    $brands,
         CategoryRepository $categories,
-        TagRepository $tags,
+        TagRepository      $tags,
         TransactionManager $transaction
     )
     {
@@ -42,7 +42,7 @@ class ProductManageService
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function create(ProductCreateForm $form): Product
     {
@@ -55,8 +55,7 @@ class ProductManageService
             $form->code,
             $form->name,
             $form->description,
-            $form->weight,
-            $form->quantity->quantity,
+//            $form->weight,
             new Meta(
                 $form->meta->title,
                 $form->meta->description,
@@ -94,12 +93,11 @@ class ProductManageService
             }
             $this->products->save($product);
         });
-
         return $product;
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function edit($id, ProductEditForm $form): void
     {
@@ -112,7 +110,7 @@ class ProductManageService
             $form->code,
             $form->name,
             $form->description,
-            $form->weight,
+//            $form->weight,
             new Meta(
                 $form->meta->title,
                 $form->meta->description,

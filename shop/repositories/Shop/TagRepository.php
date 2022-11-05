@@ -11,9 +11,14 @@ class TagRepository
     public function get($id): Tag
     {
         if (!$tag = Tag::findOne($id)) {
-            throw new NotFoundException('Tag is not found');
+            throw new NotFoundException('Tag is not found.');
         }
         return $tag;
+    }
+
+    public function findByName($name): ?Tag
+    {
+        return Tag::findOne(['name' => $name]);
     }
 
     public function save(Tag $tag): void
@@ -23,9 +28,6 @@ class TagRepository
         }
     }
 
-    /**
-     * @throws StaleObjectException
-     */
     public function remove(Tag $tag): void
     {
         if (!$tag->delete()) {

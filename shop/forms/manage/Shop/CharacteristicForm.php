@@ -11,7 +11,7 @@ class CharacteristicForm extends Model
     public $name;
     public $type;
     public $required;
-    public $defualt;
+    public $default;
     public $textVariants;
     public $sort;
 
@@ -23,7 +23,7 @@ class CharacteristicForm extends Model
             $this->name = $characteristic->name;
             $this->type = $characteristic->type;
             $this->required = $characteristic->required;
-            $this->defualt = $characteristic->defualt;
+            $this->default = $characteristic->default;
             $this->textVariants = implode(PHP_EOL, $characteristic->variants);
             $this->sort = $characteristic->sort;
             $this->_characteristic = $characteristic;

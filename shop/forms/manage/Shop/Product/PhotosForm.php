@@ -19,7 +19,7 @@ class PhotosForm extends Model
     public function beforeValidate(): bool
     {
         if (parent::beforeValidate()) {
-            $this->files = UploadedFile::getInstance($this, 'files');
+            $this->files = UploadedFile::getInstances($this, 'files');
             return true;
         }
         return false;

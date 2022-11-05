@@ -23,7 +23,7 @@ class PriceForm extends Model
     {
         return [
           [['new'], 'required'],
-          [['odl', 'new'], 'integer', 'min' => 0]
+          [['old', 'new'], 'integer', 'min' => 0]
         ];
     }
 }

@@ -1,18 +1,15 @@
 <?php
 
-use yii\helpers\Html;
-
 /* @var $this yii\web\View */
-/* @var $tag \shop\entities\Shop\Tag */
-/* @var $model \shop\forms\manage\Shop\BrandForm */
+/* @var $characteristic shop\entities\Shop\Characteristic */
+/* @var $model shop\forms\manage\Shop\CharacteristicForm */
 
-$this->title = 'Update Tag: ' . $tag->name;
-$this->params['breadcrumbs'][] = ['label' => 'Tags', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $tag->name, 'url' => ['view', 'id' => $tag->id]];
+$this->title = 'Update Characteristic: ' . $characteristic->name;
+$this->params['breadcrumbs'][] = ['label' => 'Characteristics', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $characteristic->name, 'url' => ['view', 'id' => $characteristic->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
-
-<div class="brand-update">
+<div class="characteristic-update">
 
     <?= $this->render('_form', [
         'model' => $model,

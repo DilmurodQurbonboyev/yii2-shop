@@ -15,11 +15,28 @@ class m170517_083024_create_user_networks_table extends Migration
             'network' => $this->string(16)->notNull(),
         ], $tableOptions);
 
-        $this->createIndex('{{%idx-user_networks-identity-name}}', '{{%user_networks}}', ['identity', 'network'], true);
+        $this->createIndex(
+            '{{%idx-user_networks-identity-name}}',
+            '{{%user_networks}}', [
+            'identity',
+            'network'
+        ],
+            true);
 
-        $this->createIndex('{{%idx-user_networks-user_id}}', '{{%user_networks}}', 'user_id');
+        $this->createIndex(
+            '{{%idx-user_networks-user_id}}',
+            '{{%user_networks}}',
+            'user_id'
+        );
 
-        $this->addForeignKey('{{%fk-user_networks-user_id}}', '{{%user_networks}}', 'user_id', '{{%user}}', 'id', 'CASCADE');
+        $this->addForeignKey(
+            '{{%fk-user_networks-user_id}}',
+            '{{%user_networks}}',
+            'user_id',
+            '{{%user}}',
+            'id',
+            'CASCADE'
+        );
     }
 
     public function down()

@@ -2,15 +2,15 @@
 
 namespace backend\controllers;
 
+use Yii;
+use yii\web\Controller;
+use yii\filters\VerbFilter;
 use shop\forms\auth\LoginForm;
 use shop\services\auth\AuthService;
-use Yii;
-use yii\filters\VerbFilter;
-use yii\web\Controller;
 
 class AuthController extends Controller
 {
-    private $service;
+    private AuthService $service;
 
     public function __construct($id, $module, AuthService $service, $config = [])
     {

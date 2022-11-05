@@ -1,24 +1,23 @@
 <?php
 
+use shop\entities\Shop\Characteristic;
+use shop\helpers\CharacteristicHelper;
+use yii\grid\ActionColumn;
 use yii\helpers\Html;
 use yii\grid\GridView;
-use yii\grid\ActionColumn;
-use shop\entities\Shop\Category;
 
 /* @var $this yii\web\View */
-/* @var $searchModel backend\forms\Shop\CategorySearch */
+/* @var $searchModel backend\forms\Shop\CharacteristicSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Categories';
+$this->title = 'Characteristics';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="category-index">
+<div class="user-index">
 
     <p>
-        <?= Html::a('Create Category', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Characteristic', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <div class="box">
         <div class="box-body">
@@ -26,26 +25,25 @@ $this->params['breadcrumbs'][] = $this->title;
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'columns' => [
-                    'id',
                     [
                         'attribute' => 'name',
-                        'value' => function (Category $model) {
-                            $indent = ($model->depth > 1 ? str_repeat('&nbsp;&nbsp;', $model->depth - 1) . ' ' : '');
-                            return $indent . Html::a(Html::encode($model->name), ['view', 'id' => $model->id]);
-                        },
-                        'format' => 'raw'
-                    ],
-                    [
-                        'value' => function (Category $model) {
-                            return
-                                Html::a('<span class="glyphicon glyphicon-arrow-up"></span>', ['move-up', 'id' => $model->id]) .
-                                Html::a('<span class="glyphicon glyphicon-arrow-down"></span>', ['move-down', 'id' => $model->id]);
+                        'value' => function (Characteristic $model) {
+                            return Html::a(Html::encode($model->name), ['view', 'id' => $model->id]);
                         },
                         'format' => 'raw',
-                        'contentOptions' => ['style' => 'text-align: center']
                     ],
-                    'slug',
-                    'title',
+                    [
+                        'attribute' => 'type',
+                        'filter' => $searchModel->typesList(),
+                        'value' => function (Characteristic $model) {
+                            return CharacteristicHelper::typeName($model->type);
+                        },
+                    ],
+                    [
+                        'attribute' => 'required',
+                        'filter' => $searchModel->requiredList(),
+                        'format' => 'boolean',
+                    ],
                     ['class' => ActionColumn::class],
                 ],
             ]); ?>

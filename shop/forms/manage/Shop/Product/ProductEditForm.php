@@ -31,7 +31,7 @@ class ProductEditForm extends CompositeForm
         $this->code = $product->code;
         $this->name = $product->name;
         $this->description = $product->description;
-        $this->weight = $product->weight;
+//        $this->weight = $product->weight;
         $this->meta = new MetaForm($product->meta);
         $this->categories = new CategoriesForm($product);
         $this->tags = new TagsForm($product);

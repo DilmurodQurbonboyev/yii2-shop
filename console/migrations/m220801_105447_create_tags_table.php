@@ -17,7 +17,12 @@ class m220801_105447_create_tags_table extends Migration
             'slug' => $this->string()->notNull(),
         ], $tableOptions);
 
-        $this->createIndex('{{%idx-shop_tags-slug}}', '{{%shop_tags}}', 'slug', true);
+        $this->createIndex(
+            '{{%idx-shop_tags-slug}}',
+            '{{%shop_tags}}',
+            'slug',
+            true
+        );
     }
 
     public function down()

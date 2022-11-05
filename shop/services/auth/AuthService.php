@@ -1,6 +1,5 @@
 <?php
 
-
 namespace shop\services\auth;
 
 use shop\entities\User\User;
@@ -18,11 +17,10 @@ class AuthService
 
     public function auth(LoginForm $form): User
     {
-        $user = $this->users->findByUserNameOrEmail($form->username);
+        $user = $this->users->findByUsernameOrEmail($form->username);
         if (!$user || !$user->isActive() || !$user->validatePassword($form->password)) {
-            throw new \DomainException('Underfined user or password');
+            throw new \DomainException('Undefined user or password.');
         }
-
         return $user;
     }
 }

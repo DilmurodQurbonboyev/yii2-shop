@@ -13,22 +13,20 @@ use yii\db\ActiveRecord;
  */
 class Modification extends ActiveRecord
 {
-    public static function create($code, $name, $price, $quantity): self
+    public static function create($code, $name, $price): self
     {
         $modification = new static();
         $modification->code = $code;
         $modification->name = $name;
         $modification->price = $price;
-        $modification->quantity = $quantity;
         return $modification;
     }
 
-    public function edit($code, $name, $price, $quantity): void
+    public function edit($code, $name, $price): void
     {
         $this->code = $code;
         $this->name = $name;
         $this->price = $price;
-        $this->quantity = $quantity;
     }
 
     public function checkout($quantity): void
